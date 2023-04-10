@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import UserMenu from './UserMenu'
+import NavMenu from './NavMenu'
 
 
 export default function HeaderDesktop() {
@@ -9,6 +10,7 @@ export default function HeaderDesktop() {
         <NavLink to="/">
         <span className='font-medium text-2xl text-red-500 animate-ping'>NguyenThanhFilm</span>
         </NavLink>
+        <NavMenu/>
         <UserMenu/>
         
     </div>

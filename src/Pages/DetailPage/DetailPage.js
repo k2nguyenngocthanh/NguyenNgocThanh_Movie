@@ -5,62 +5,12 @@ import { movieServ } from "../../Service/movieService";
 import { CustomCard } from "@tsamantanis/react-glassmorphism";
 import "@tsamantanis/react-glassmorphism/dist/index.css";
 import { Tabs } from "antd";
-import ItemTabMovie from "../HomePage/TabsMovie/ItemTabMovie";
 import moment from "moment";
+import { Rate } from "antd";
+import TabPane from "antd/es/tabs/TabPane";
+import ShowTime from "./ShowTime";
 
-const onChange = (key) => {
-  console.log(key);
-};
-const items = [
-  {
-    key: "1",
-    label: `Tab 1`,
-    children: `Content of Tab Pane 1`,
-  },
-];
 export default function DetailPage() {
-  const [heThongRap, setHeThongRap] = useState([]);
-
-  useEffect(() => {
-    movieServ
-      .getMovieByTheater()
-      .then((res) => {
-        console.log(res);
-        setHeThongRap(res.data.content);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-  let renderHeThongRap = () => {
-    return heThongRap.map((rap, index) => {
-      return {
-        key: rap.maHeThongRap,
-        label: <img className="h-16" src={rap.logo} alt="" />,
-        children: (
-          <Tabs
-            style={{ height: 500 }}
-            defaultActiveKey="1"
-            tabPosition="left"
-            items={rap.lstCumRap.map((cumRap) => {
-              return {
-                key: cumRap.tenCumRap,
-                label: <div>{cumRap.tenCumRap}</div>,
-                children: (
-                  <div className=" overflow-y-scroll" style={{ height: 500 }}>
-                    {cumRap.danhSachPhim.map((item) => {
-                      return <ItemTabMovie phim={item} />;
-                    })}
-                  </div>
-                ),
-              };
-            })}
-            onChange={onChange}
-          />
-        ),
-      };
-    });
-  };
   let { id } = useParams();
   const [movie, setMovie] = useState({});
   useEffect(() => {
@@ -68,10 +18,7 @@ export default function DetailPage() {
       try {
         let result = await movieServ.getDetailMovie(id);
         setMovie(result.data.content);
-        console.log("result:", result);
-      } catch (error) {
-        console.log(" error:", error);
-      }
+      } catch (error) {}
     };
     fetchDetail();
   }, []);
@@ -82,7 +29,7 @@ export default function DetailPage() {
         backgroundImage: `url(${movie.hinhAnh})`,
         backgroundSize: "100%",
         minHeight: "100vh",
-        backgroundPosition: "center"
+        backgroundPosition: "center",
       }}
     >
       <CustomCard
@@ -93,53 +40,57 @@ export default function DetailPage() {
         borderRadius={0} // default border radius value is 10px
       >
         <div className="grid grid-cols-12 ">
-          <div className="cols-span-5 col-start-3">
+          <div className="col-span-5 col-start-3">
             <div className="grid grid-cols-3">
               <img
                 className="col-span-1 "
-                src={movie.hinhAnh} 
-                style={{   height: 300 }}
+                src={movie.hinhAnh}
+                style={{ width: "100%", height: 300 }}
                 alt="anh phim"
               />
               <div className="col-span-2 ml-5 " style={{ marginTop: "25%" }}>
-                <p className="">Ngày chiếu:{moment(movie.ngayKhoiChieu).format("DDMM.YYYY")}</p>
-                <p className="font-medium text-4xl">{movie.tenPhim}</p>
-                <p>{movie.moTa}</p>
+                <p className="text-2xl">
+                  Ngày chiếu: {moment(movie.ngayKhoiChieu).format("DD.MM.YYYY")}
+                </p>
+                <p className="text-4xl text ">{movie.tenPhim}</p>
+                <p>{movie.moTa?.substring(0, 100)} ...</p>
               </div>
             </div>
           </div>
 
-          <div className="cols-span-4 ">
+          <div className="col-span-4 ml-5">
+            <p className="text-4xl ">Đánh giá phim</p>
             <Progress percent={movie.danhGia * 10} />
+            <h1
+              style={{ marginLeft: "5%" }}
+              className="text-yellow-500 text-2xl"
+            >
+              <Rate
+                allowHalf
+                value={movie.danhGia / 2}
+                style={{ color: "yellow", fontSize: 30 }}
+              />
+            </h1>
+            <br />
+            <br />
+
+            <a
+              href="#DatVe"
+              className="rounded px-5 py-2 bg-red-600 text-white font-medium "
+            >
+              Mua vé
+            </a>
           </div>
         </div>
-        {/* <div className="flex space-x-10">
-            <img src={movie.hinhAnh} className="w-1/3" alt="" />
-            <div className="space-y-5">
-              <h2 className="font-medium">{movie.tenPhim}</h2>
-             
-
-              <Progress percent={movie.danhGia * 10} />
-            </div>
-          </div>
-          <NavLink
-            className="rounded px-5 py-2 bg-red-600 text-white font-medium"
-            to={`/booking/${id}`}
-          >
-            Mua vé
-          </NavLink> */}
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+        <div className="mt-20 ml-72 w-2/3 container bg-white px-5 py-5">
+          <ShowTime  />
+        </div>
       </CustomCard>
-      <div className="container ">
-        {""}
-        <Tabs
-          style={{ height: 500 }}
-          defaultActiveKey="1"
-          tabPosition="left"
-          items={renderHeThongRap()}
-          onChange={onChange}
-        />
-        ;
-      </div>
     </div>
   );
 }

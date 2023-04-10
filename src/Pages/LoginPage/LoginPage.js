@@ -1,6 +1,6 @@
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { USER_LOGIN } from '../../Redux/contant/userContant';
 import { localUserSrv } from '../../Service/localService';
 import { userServ } from '../../Service/userService';
@@ -45,12 +45,13 @@ const LoginPage = () =>{
         console.log('Failed:', errorInfo);
         
       };
- return( <div className="h-screen w-screen flex bg-orange-500 justify-center items-center">
+ return( <div style={{backgroundImage:`url('http://demo1.cybersoft.edu.vn/static/media/backapp.b46ef3a1.jpg')`}} className="h-screen w-screen flex  justify-center items-center">
       <div className="container mx-auto p-5 bg-white rounded flex">
       <div className="w-1/2 h-full">
       <Lottie animationData={bg_animate} loop={true} />
         </div>
       <div className="w-1/2 h-full">
+        <p className='text-2xl text-center mb-4' >Đăng Nhập</p>
       <Form
             name="basic"
             labelCol={{
@@ -104,6 +105,8 @@ const LoginPage = () =>{
               <Button className="bg-orange-500 hover:text-white hover:border-hidden" htmlType="submit">
                 Submit
               </Button>
+              <br /><br />
+              <span  > Bạn chưa có tài khoản ? <NavLink className='text-red-500' to="/register"> <u>Đăng kí tại đây</u></NavLink> </span>
             </Form.Item>
           </Form>
         </div>

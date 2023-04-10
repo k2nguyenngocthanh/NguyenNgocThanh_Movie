@@ -22,11 +22,11 @@ export default function TabsMovie() {
     movieServ
       .getMovieByTheater()
       .then((res) => {
-        console.log(res);
+       
         setHeThongRap(res.data.content);
       })
       .catch((err) => {
-        console.log(err);
+      
       });
   }, []);
 
@@ -61,7 +61,7 @@ export default function TabsMovie() {
     });
   };
   return (
-    <div className="container ">
+    <div id="lichChieu" className="container ">
     {""}
       <Tabs
       style={{height:500}}

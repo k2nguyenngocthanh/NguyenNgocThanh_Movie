@@ -10,11 +10,11 @@ export default function Footer() {
     movieServ
       .getFooterMovie()
       .then((res) => {
-        console.log(res);
+    
         setHeThongRap(res.data.content);
       })
       .catch((err) => {
-        console.log(err);
+
       });
   }, []); 
   let renderHeThongRap = () => {

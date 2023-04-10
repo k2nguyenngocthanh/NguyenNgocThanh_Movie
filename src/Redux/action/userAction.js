@@ -1,6 +1,6 @@
 import { localUserSrv } from "../../Service/localService";
 import { userServ } from "../../Service/userService";
-import { USER_LOGIN } from "../contant/userContant"
+import { USER_LOGIN, USER_REGISTER } from "../contant/userContant"
 
 export const setLoginAction = (value) =>{
     return {
@@ -29,4 +29,6 @@ export const setLoginActionService = (value,onCompleted) => {
         });
     };
   };
+
+
   

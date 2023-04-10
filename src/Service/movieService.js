@@ -8,7 +8,7 @@ export const movieServ = {
 
   getMovieByTheater: () => {
     return https.get(
-      "/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01"
+      "/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP00"
     );
   },
   getDetailMovie: (maPhim) => {
@@ -20,5 +20,8 @@ export const movieServ = {
   getBookTicketsMovie:(maLichChieu)=>{
     return https.get(`/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu}`);
   },
+  getHeThongRapChieu:(maPhim)=>{
+    return https.get(`api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`)
+  }
 
 };

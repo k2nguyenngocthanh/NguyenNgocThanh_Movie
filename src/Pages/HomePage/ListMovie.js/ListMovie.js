@@ -8,14 +8,14 @@ export default function ListMovie() {
         movieServ
         .getMovieList()
         .then((res) => {
-                console.log(res);
+                
                 setMovies(res.data.content)
               })
               .catch((err) => {
-               console.log(err);
+     
               });
     },[]);
-  return  <div className='container grid grid-cols-6 gap-10'>
+  return  <div id='listMovie' className='container grid grid-cols-6 gap-10'>
     {movies.map((item)=> {
         return <ItemMovie data={item} key={item.maPhim}/>
     })}
